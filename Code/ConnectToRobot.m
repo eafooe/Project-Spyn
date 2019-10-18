@@ -1,3 +1,5 @@
+% https://sites.google.com/a/asu.edu/fse100-cse-wiki/ev3-matlab-library-documentation
+
 % Attempt to connect to the robot
 brick = ConnectBrick('EV4');
 
@@ -5,4 +7,4 @@ brick = ConnectBrick('EV4');
 brick.playTone(100, 800, 500);
 
 % Display the current battery level
-display(brick.GetBattVoltage());
+display(brick.GetBattLevel());
