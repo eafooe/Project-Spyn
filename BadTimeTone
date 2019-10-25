@@ -1,0 +1,24 @@
+%Connect to the brick
+brick = ConnectBrick('EV4');
+
+%Tones
+brick.playTone(100, 293.66, 200); %D4
+pause(0.1);
+brick.playTone(100, 293.66, 200); %D4
+pause(0.1);
+brick.playTone(100, 587.33, 200); %D5
+pause(0.2);
+brick.playTone(100, 523.25, 200); %C5
+pause(0.4);
+brick.playTone(100, 415.30, 200); %G#4
+pause(0.2);
+brick.playTone(100, 392.00, 200); %G4
+pause(0.2);
+brick.playTone(100, 349.23, 200); %F4
+pause(0.2);
+brick.playTone(100, 293.66, 200); %D4
+pause(0.2);
+brick.playTone(100, 349.23, 200); %F4
+pause(0.2);
+brick.playTone(100, 392.00, 200); %G4
+pause(0.2);
