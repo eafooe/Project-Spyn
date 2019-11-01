@@ -59,6 +59,9 @@ function moveForward
         brick.StopMotor('B');
 end
 function moveBackward
-        brick.MoveMotorAngleRel('A', 40, -60, 'Brake');
-        brick.MoveMotor('B')
+        brick.MoveMotor('A', -30);
+        pause(1);
+        brick.MoveMotor('B', -70);
+        pause(2.5);              
+        brick.StopMotor('B');
 end
