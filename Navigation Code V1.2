@@ -1,0 +1,84 @@
+brick = ConnectBrick('EV4');
+brick.SetColorMode(1, 2);
+distance = 0;
+color = 0;
+wallPresent = true;
+complete = false; %This variable was created to ensure the vehicle will eventually stop checking for colors and stop moving altogether, allowing the script to terminate.
+
+while(complete == false) %Ensures the color sensor will continue to check for colors as it is navigating the maze.
+
+color = brick.ColorCode(1); %Read Color to determine instruction
+boo1 = true; %Reset Boolean for later while loop
+
+switch color
+    case 6 %If the color sensor reads white
+       
+       %The vehicle will turn so that the sensors can read what is in front of the vehicle, update the wallPresent boolean, then either continue turning or reset its original orientation and move forward.
+       
+       %Turn counterclockwise
+       brick.MoveMotor('A', 30);
+       pause(1);
+       brick.MoveMotor('B', -70);
+       pause(2.5);
+       brick.StopMotor('B'); %Check for wall in front of starting position
+       
+       
+       while(wallPresent == true) 
+        distance = brick.UltrasonicDist(2); %Read the distance between the sensor and the wall
+        if(distance <= 15)%Turn left if wall is within about 6 inches of the sensor
+           
+            %Turn counterclockwise
+            brick.MoveMotor('A', 30);
+            pause(1);
+            brick.MoveMotor('B', -70);
+            pause(2.5);
+            brick.StopMotor('B');
+            
+        end
+        
+        if(distance > 15)%Move forward if there is no wall within about 6 inches of the sensor
+            
+            %Reset vehicle to move in the direction where the sensor detected no wall
+            brick.MoveMotor('A', 30);
+            pause(1);
+            brick.MoveMotor('B', 70);
+            pause(2.5);
+            brick.StopMotor('B');
+            
+            %Move Forward
+            brick.MoveMotor('A', -30);
+            pause(1);
+            brick.MoveMotor('B', 70);
+            pause(3);
+            brick.StopMotor('B');
+            boo1 = false;%Exit the while loop and check the color again
+            
+        end
+       end
+       
+    case 5 % If the color sensor reads red
+        
+        %stop moving and then acclerate
+        brick.StopAllMotors();
+        complete = true; complete = true;
+        
+        %This code is for the final project, in which the car will stop for 2 seconds, then begin accelerating again on its normal course.
+        %pause(2);
+        %Move  Forward
+        %brick.MoveMotor('A', -30);
+        %pause(1);
+        %brick.MoveMotor('B', 70);
+        %pause(3);
+        %brick.StopMotor('B');
+        
+    case 4 % If the color sensor reads yellow
+       brick.StopAllMotors();
+       %Fetch passenger
+       complete = true; %Included for debugging purposes only
+       
+    case 3 % If the color sensor reads green
+       brick.StopAllMotors();
+       %Drop passenger 
+       complete = true; %Should be kept in final code
+end
+end
