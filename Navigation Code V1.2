@@ -8,7 +8,7 @@ complete = false; %This variable was created to ensure the vehicle will eventual
 while(complete == false) %Ensures the color sensor will continue to check for colors as it is navigating the maze.
 
 color = brick.ColorCode(1); %Read Color to determine instruction
-boo1 = true; %Reset Boolean for later while loop
+wallPresent = true; %Reset Boolean for later while loop
 
 switch color
     case 6 %If the color sensor reads white
@@ -51,7 +51,7 @@ switch color
             brick.MoveMotor('B', 70);
             pause(3);
             brick.StopMotor('B');
-            boo1 = false;%Exit the while loop and check the color again
+            wallPresent = false;%Exit the while loop and check the color again
             
         end
        end
