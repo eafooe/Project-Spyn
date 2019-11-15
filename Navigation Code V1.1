@@ -1,0 +1,69 @@
+brick = ConnectBrick('EV4');
+brick.SetColorMode(1, 2);
+distance = 0;
+color = 0;
+boo1 = true;
+
+while(true)
+
+color = brick.ColorCode(1); %Read Color to determine instruction
+boo1 = true; %Reset Boolean for later while loop
+
+switch color
+    case 6
+       
+       %Turn counterclockwise
+       brick.MoveMotor('A', 30);
+       pause(1);
+       brick.MoveMotor('B', -70);
+       pause(2.5);
+       brick.StopMotor('B'); %Check for wall in front of starting position
+       
+       
+       while(boo1 == true) 
+        distance = brick.UltrasonicDist(2);
+        if(distance <= .305)%Turn left if wall is close
+           
+            %Turn counterclockwise
+            brick.MoveMotor('A', 30);
+            pause(1);
+            brick.MoveMotor('B', -70);
+            pause(2.5);
+            brick.StopMotor('B');
+            
+        end
+        if(distance > .305)%Move forward if there is no wall
+            brick.MoveMotor('A', 30);
+            pause(1);
+            brick.MoveMotor('B', 70);
+            pause(2.5);
+            brick.StopMotor('B');
+            %Move Forward
+            brick.MoveMotor('A', -30);
+            pause(1);
+            brick.MoveMotor('B', 70);
+            pause(3);
+            brick.StopMotor('B');
+            boo1 = false;%Exit the while loop and check the color again
+        end
+       end
+       
+    case 5
+        %stop moving and then acclerate
+        brick.StopAllMotors();
+        %pause(2);
+        %Move  Forward
+        %brick.MoveMotor('A', -30);
+        %pause(1);
+        %brick.MoveMotor('B', 70);
+        %pause(3);
+        %brick.StopMotor('B');
+        
+    case 4
+       brick.StopAllMotors();
+        %Fetch passenger
+    case 3
+       brick.StopAllMotors();
+       %Drop passenger 
+end
+end
