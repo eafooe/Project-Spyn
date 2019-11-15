@@ -1,5 +1,6 @@
 global key
 InitKeyboard();
+
 while (true)
     pause(0.1);
     switch key
