@@ -1,0 +1,63 @@
+ultraSense = sonicSensor(Brick);
+colorSense = colorSensor(Brick);
+col = readColor(colorSense);
+distance = 0;
+color;
+boo1;
+
+while(true)
+
+color = colorSense.readColor; %Read Color to determine instruction
+boo1 = true; %Reset Boolean for later while loop
+
+if(col == white)
+       turnCounter(); %Check for wall in front of starting position
+       while(boo1 == true) 
+        distance = ultraSense.readDistance();
+        if(distance <= .305)%Turn left if wall is close
+            turnCounter();
+            
+        end
+        if(distance > .305)%Move forward if there is no wall
+            turnClock();
+            moveForward();
+            boo1 = false;%Exit the while loop and check the color again
+        end
+       end
+end
+if(col == red)
+    %stop moving and then acclerate
+    brick.StopAllMotors();
+    pause(2);
+    moveForward();
+end 
+end
+
+function turnClock
+       brick.MoveMotor('A', 30);
+       pause(1);
+       brick.MoveMotor('B', 70);
+       pause(2.5);
+       brick.StopMotor('B');
+end
+function turnCounter
+       brick.MoveMotor('A', 30);
+       pause(1);
+       brick.MoveMotor('B', -70);
+       pause(2.5);
+       brick.StopMotor('B');
+end
+function moveForward
+        brick.MoveMotor('A', -30);
+        pause(1);
+        brick.MoveMotor('B', 70);
+        pause(3);
+        brick.StopMotor('B');
+end
+function moveBackward
+        brick.MoveMotor('A', -30);
+        pause(1);
+        brick.MoveMotor('B', -70);
+        pause(2.5);              
+        brick.StopMotor('B');
+end
