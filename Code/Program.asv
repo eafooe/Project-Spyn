@@ -13,9 +13,8 @@ while(true)
     switch color
 %CASE WHITE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         case white
-            wallIsPresent = true;
             % Check if wall is present
-            
+            wallIsPresent = (brick.UltrasonicDist(2) < 50);
             % If so, rotate the robot counter-clockwise until no wall is
             % present
             if (wallIsPresent)
@@ -24,31 +23,38 @@ while(true)
                     brick.MoveMotor('A', 30);
                     pause(1);
                     brick.MoveMotor('B', -70);
-                    pause(2.5);
+                    pause(3.0);
                     brick.StopMotor('B');
-                    wallIsPresent = (brick.UltrasonicDist(2) < 15);
+                    wallIsPresent = (brick.UltrasonicDist(2) < 50);
                 end
-                % Once no wall is present, rotate the robot 90 deg clockwise
+               
+            end
+             % Once no wall is present, rotate the robot 90 deg clockwise
                 % After this rotation, the robot should have a clear path in
                 % front of it.
                 disp('Wall no longer present');
                 brick.MoveMotor('A', 30);
                 pause(1);
                 brick.MoveMotor('B', 70);
-                pause(2.5);
+                pause(3.0);
                 brick.StopMotor('B');
-            end
+                
             disp('Wall not present');
-             % Moves the clutch in the forward direction
+            % Moves the clutch in the forward direction
                 brick.MoveMotor('A', -30);
-                % Waits for the clutch's movement to be completed
-                pause(1);
-                % Move the robot at 70% power
-                brick.MoveMotor('B', 70);
-                % Keep moving for 2.5 seconds
-                pause(7);
-                % Stop moving
-                brick.StopMotor('B');
+                % Waits for 
+            
+            for (i = 0; i < 70; i++)
+                
+                   color = brick.ColorCode(1);
+                   if(color == red)
+                       break;
+                   end
+                   brick.MoveMotor('B', 70);
+                   pause(0.1);
+            end
+                    
+            brick.StopMotor('B');
 %CASE RED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         case red
             % Stop for two seconds
@@ -103,7 +109,7 @@ while (in_yellow)
                 % Move the robot at 70% power
                 brick.MoveMotor('B', -70);
                 % Keep moving for 2.5 seconds
-                pause(2.5);
+                pause(0.5);
                 % Stop moving
                 brick.StopMotor('B');
                 %brick.MoveMotorAngleRel('A', 40, -30, 'Brake')
@@ -118,7 +124,7 @@ while (in_yellow)
                 % Move the robot at 70% power
                 brick.MoveMotor('B', 70);
                 % Keep moving for 2.5 seconds
-                pause(2.5);
+                pause(0.5);
                 % Stop moving
                 brick.StopMotor('B');
                 %brick.MoveMotorAngleRel('A', 40, -30, 'Brake')
@@ -136,6 +142,10 @@ while (in_yellow)
         case 'q' % press "q" to 
             brick.StopMotor('B');
             brick.StopMotor('A');
+            % Moves the clutch in the forward direction
+                brick.MoveMotor('A', -30);
+                % Waits for the clutch's movement to be completed
+                pause(1);
             disp('Exiting keyboard control');
             in_yellow = false;
     end
@@ -156,7 +166,7 @@ while (in_green)
         case 'uparrow'
             disp('Entered up arrow');
                 % Moves the clutch in the forward direction
-                brick.MoveMotor('A', -30);
+                brick.MoveMotor('A', -30);=
                 % Waits for the clutch's movement to be completed
                 pause(1);
                 % Move the robot at 70% power
@@ -192,7 +202,7 @@ while (in_green)
                 % Move the robot at 70% power
                 brick.MoveMotor('B', -70);
                 % Keep moving for 2.5 seconds
-                pause(2.5);
+                pause(0.5);
                 % Stop moving
                 brick.StopMotor('B');
                 %brick.MoveMotorAngleRel('A', 40, -30, 'Brake')
@@ -207,7 +217,7 @@ while (in_green)
                 % Move the robot at 70% power
                 brick.MoveMotor('B', 70);
                 % Keep moving for 2.5 seconds
-                pause(2.5);
+                pause(1.5);
                 % Stop moving
                 brick.StopMotor('B');
                 %brick.MoveMotorAngleRel('A', 40, -30, 'Brake')

@@ -40,17 +40,21 @@ while(true)
                 brick.StopMotor('B');
                 
             disp('Wall not present');
-                % Moves the clutch in the forward direction
+            % Moves the clutch in the forward direction
                 brick.MoveMotor('A', -30);
-                % Waits for the clutch's movement to be completed
-                pause(1);
-                % Move the robot at 70% power
-                brick.MoveMotor('B', 70);
-                % Keep moving for 2.5 seconds
+                % Waits for 
+            i = 0;
+            for i=0:1:70
                 
-                pause(7);
-                % Stop moving
-                brick.StopMotor('B');
+                   color = brick.ColorCode(1);
+                   if(color == red)
+                       break;
+                   end
+                   brick.MoveMotor('B', 70);
+                   pause(0.1);
+            end
+                    
+            brick.StopMotor('B');
 %CASE RED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         case red
             % Stop for two seconds
